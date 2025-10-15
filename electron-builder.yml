@@ -12,7 +12,6 @@ mac:
 win:
   target:
     - portable
-    - nsis
   icon: build/icon.png
 linux:
   target: AppImage

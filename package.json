@@ -21,13 +21,15 @@
   "build": {
     "appId": "com.local.pnginfo-sorter",
     "productName": "PNG Sorter",
-    "icon": "build/icon.png"
+    "icon": "build/icon.png",
+    "win": {
+      "target": "portable",
+      "icon": "build/icon.png"
+    }
   },
-  "dependencies": {
-    "electron": "^28.0.0",
-    "pngjs": "^7.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "electron": "^28.0.0",
     "electron-builder": "^24.0.0"
   }
 }
