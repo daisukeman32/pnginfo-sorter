@@ -70,8 +70,11 @@ function handleFiles(fileList) {
   files = fileList;
   log(`${files.length}個のPNGファイルを読み込みました`);
 
+  // ファイル数を表示
+  document.getElementById('file-count').textContent = `読み込み: ${files.length}件`;
+
   // 実行ボタンを有効化
-  document.getElementById('execute').disabled = files.length === 0 || rules.length === 0;
+  updateExecuteButton();
 }
 
 // フォルダ選択
@@ -97,18 +100,36 @@ document.getElementById('add-rule').addEventListener('click', () => {
     document.getElementById('folder').value = '';
 
     log(`ルールを追加: "${keyword}" → ${folder}`);
-
-    // 実行ボタンを有効化
-    document.getElementById('execute').disabled = files.length === 0 || rules.length === 0;
   } else {
     alert('キーワードとフォルダパスを両方入力してください');
   }
 });
 
+// 実行ボタンの状態を更新
+function updateExecuteButton() {
+  const executeBtn = document.getElementById('execute');
+  const canExecute = files.length > 0 && rules.length > 0;
+
+  executeBtn.disabled = !canExecute;
+
+  if (canExecute) {
+    executeBtn.textContent = `実行（${files.length}ファイル × ${rules.length}ルール）`;
+  } else if (files.length === 0 && rules.length === 0) {
+    executeBtn.textContent = '実行（ファイルとルールを追加してください）';
+  } else if (files.length === 0) {
+    executeBtn.textContent = '実行（ファイルを追加してください）';
+  } else {
+    executeBtn.textContent = '実行（ルールを追加してください）';
+  }
+}
+
 // ルールリスト更新
 function updateRuleList() {
   const list = document.getElementById('rule-list');
   list.innerHTML = '';
+
+  // ルール数を表示
+  document.getElementById('rule-count').textContent = `${rules.length}件`;
 
   rules.forEach((rule, index) => {
     const li = document.createElement('li');
@@ -125,13 +146,16 @@ function updateRuleList() {
       log(`ルールを削除: "${rule.keyword}"`);
 
       // 実行ボタンの状態を更新
-      document.getElementById('execute').disabled = files.length === 0 || rules.length === 0;
+      updateExecuteButton();
     };
 
     li.appendChild(text);
     li.appendChild(deleteBtn);
     list.appendChild(li);
   });
+
+  // 実行ボタンの状態を更新
+  updateExecuteButton();
 }
 
 // 実行

@@ -16,12 +16,13 @@
     <div id="drop-area">
       <p>PNGファイルをドロップ</p>
       <p class="hint">または クリックしてファイル選択</p>
+      <p id="file-count" class="hint">読み込み: 0件</p>
     </div>
 
     <div id="rules-section">
-      <h3>振り分けルール:</h3>
+      <h3>振り分けルール: <span id="rule-count">0件</span></h3>
       <div class="rule-input">
-        <input type="text" id="keyword" placeholder="キーワード（例: Stable Diffusion）">
+        <input type="text" id="keyword" placeholder="キーワード（例: airi_takahashi）">
         <input type="text" id="folder" placeholder="フォルダパス" readonly>
         <button id="select-folder">📁</button>
         <button id="add-rule">+</button>
@@ -29,7 +30,7 @@
       <ul id="rule-list"></ul>
     </div>
 
-    <button id="execute" disabled>実行</button>
+    <button id="execute" disabled>実行（ファイルとルールを追加してください）</button>
 
     <div id="log-section">
       <h3>ログ:</h3>

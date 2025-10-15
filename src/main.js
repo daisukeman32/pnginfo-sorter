@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
 
 let mainWindow;
 
@@ -41,7 +42,7 @@ function extractPNGText(buffer) {
       const length = buffer.readUInt32BE(offset);
       const type = buffer.toString('ascii', offset + 4, offset + 8);
 
-      if (type === 'tEXt' || type === 'iTXt') {
+      if (type === 'tEXt') {
         const data = buffer.slice(offset + 8, offset + 8 + length);
         const nullIndex = data.indexOf(0);
 
@@ -49,6 +50,34 @@ function extractPNGText(buffer) {
           const keyword = data.toString('ascii', 0, nullIndex);
           const text = data.toString('utf-8', nullIndex + 1);
           chunks[keyword] = text;
+        }
+      } else if (type === 'iTXt') {
+        const data = buffer.slice(offset + 8, offset + 8 + length);
+        const nullIndex = data.indexOf(0);
+
+        if (nullIndex !== -1) {
+          const keyword = data.toString('ascii', 0, nullIndex);
+          const text = data.toString('utf-8', nullIndex + 1);
+          chunks[keyword] = text;
+        }
+      } else if (type === 'zTXt') {
+        const data = buffer.slice(offset + 8, offset + 8 + length);
+        const nullIndex = data.indexOf(0);
+
+        if (nullIndex !== -1) {
+          const keyword = data.toString('ascii', 0, nullIndex);
+          const compressionMethod = data[nullIndex + 1];
+
+          if (compressionMethod === 0) {
+            const compressedData = data.slice(nullIndex + 2);
+            try {
+              const decompressed = zlib.inflateSync(compressedData);
+              const text = decompressed.toString('utf-8');
+              chunks[keyword] = text;
+            } catch (e) {
+              console.error(`Failed to decompress zTXt chunk: ${keyword}`, e);
+            }
+          }
         }
       }
 

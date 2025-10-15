@@ -8,10 +8,13 @@ files:
 mac:
   target: dmg
   category: public.app-category.utilities
+  icon: build/icon.png
 win:
   target:
     - portable
     - nsis
+  icon: build/icon.png
 linux:
   target: AppImage
   category: Utility
+  icon: build/icon.png
