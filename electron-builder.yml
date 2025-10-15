@@ -1,0 +1,17 @@
+appId: com.local.pnginfo-sorter
+productName: PNG Sorter
+directories:
+  output: dist
+files:
+  - "src/**/*"
+  - "package.json"
+mac:
+  target: dmg
+  category: public.app-category.utilities
+win:
+  target:
+    - portable
+    - nsis
+linux:
+  target: AppImage
+  category: Utility

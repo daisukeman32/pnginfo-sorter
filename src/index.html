@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PNG Sorter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="night">
+  <header>
+    <h1>PNG Sorter</h1>
+    <button id="theme-toggle">Day/Night</button>
+  </header>
+
+  <main>
+    <div id="drop-area">
+      <p>PNGファイルをドロップ</p>
+      <p class="hint">または クリックしてファイル選択</p>
+    </div>
+
+    <div id="rules-section">
+      <h3>振り分けルール:</h3>
+      <div class="rule-input">
+        <input type="text" id="keyword" placeholder="キーワード（例: Stable Diffusion）">
+        <input type="text" id="folder" placeholder="フォルダパス" readonly>
+        <button id="select-folder">📁</button>
+        <button id="add-rule">+</button>
+      </div>
+      <ul id="rule-list"></ul>
+    </div>
+
+    <button id="execute" disabled>実行</button>
+
+    <div id="log-section">
+      <h3>ログ:</h3>
+      <textarea id="log" readonly></textarea>
+    </div>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

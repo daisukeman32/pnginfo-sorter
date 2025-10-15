@@ -1,0 +1,25 @@
+{
+  "name": "pnginfo-sorter",
+  "version": "1.0.0",
+  "description": "PNG画像のメタデータを読み取って自動仕分けするツール",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [
+    "png",
+    "metadata",
+    "sorter",
+    "electron"
+  ],
+  "author": "daisukeman32",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^28.0.0",
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.0.0"
+  }
+}
